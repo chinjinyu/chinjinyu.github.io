@@ -1,4 +1,4 @@
-# Welcome to Chin's blog!
+# 欢迎来到Chin's blog!
 > “If I've learned one thing in the 14 years I've been a full-time cartoonist, it's that you can not let anyone else define your professionalism. It has to be a personal ethos to which you adhere despite third party influence or acceptance. The old measuring sticks for professionalism are going away and now more than ever it's time for independent creatives to set the bar. Set it high.” -- Scott R. Kurtz
 
 ## 我的链接
