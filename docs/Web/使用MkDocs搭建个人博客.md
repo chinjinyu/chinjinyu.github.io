@@ -1,6 +1,6 @@
 # 使用MkDocs搭建个人博客
 
-接触编程已经好几年了，阅读了无数大佬的博客文章，但是从来没有自己写过。这其中最重要的原因当然是懒惰，觉得写博客太费时间了，对自己的帮助不大。可是如今发现，自己的记性越来越捉急了，一个技术经过一段时间不接触之后，就几乎完全忘记了。对此我很苦恼，于是萌生了写博客的想法。曾经听说过GitHub上可以搭建博客，一直没有在意，正好借这个机会好好研究下。
+接触编程已经好几年了，阅读了无数大佬的博客文章，但是从来没有自己写过。这其中最重要的原因当然是懒惰，觉得写博客太费时间了，对自己的帮助也不大。可是如今发现自己的记性越来越捉急了，某样技术在一段时间不接触之后，就几乎完全忘记了。对此我很是苦恼，于是萌生了写博客的想法，毕竟好记性不如烂笔头嘛。曾经听说过GitHub上可以搭建博客，也看到很多人是这样做的，正好借这个机会好好研究下。
 
 ## MkDocs介绍
 
@@ -12,12 +12,12 @@ MkDocs是一个**快速**、**简单**、**华丽**的静态站点生成器，�
 
 MkDocs的特点有：
 
-- 具有多种漂亮的主题
+- 多个漂亮主题
 - 易于个性化
-- 编写时预览
+- 实时预览
 - 随处托管
 
-## 搭建博客
+## 快速搭建
 
 ### 新建GitHub仓库
 
@@ -63,13 +63,13 @@ pipenv shell
 mkdocs --version
 ```
 
-如果正常输出MkDocs的版本信息，则说明安装成功
+如果安装成功，则应该会输出MkDocs的版本信息
 
 ![20230806225116.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230806225116.png)
 
 ### 创建MkDocs工程
 
-在当前目录(github-pages)下新建工程
+在当前目录( `github-pages` )下新建工程
 
 ```bash
 mkdocs new .
@@ -85,7 +85,7 @@ mkdocs build
 
 ### 预览和部署
 
-MkDocs支持在部署之前，预览网页内容
+MkDocs支持在部署之前，实时预览网页内容
 
 ```bash
 mkdocs serve -a 0.0.0.0:8000
@@ -93,19 +93,21 @@ mkdocs serve -a 0.0.0.0:8000
 
 其中的 `-a` 选项用于指定绑定的 `<IP:PORT>` ，如果不指定，则默认为 `localhost:8000`
 
-预览如果没有发现问题，就可以部署到GitHub
+如果预览发现问题，直接修改文档源文件，MkDocs检测到文件发生变化会自动更新预览内容
+
+预览如果没有发现问题，接下来就可以部署到GitHub了
 
 ```bash
 mkdocs gh-deploy --clean
 ```
 
-执行结束后，查看GitHub仓库网页，发现多了一个 `gh-pages` 分支，这个分支里存放的就是 `site` 文件夹中的内容
+执行结束后，查看GitHub仓库，发现多了一个 `gh-pages` 分支，这个分支里存放的就是 `site` 文件夹中的内容
 
-配置GitHub Pages的构建和部署分支，将 `Settings` -> `Pages` -> `Build and deployment` -> `Branch` 设置为 `gh-pages/(root)`，点击 `Save` 保存设置
+最后一步，配置GitHub Pages的构建和部署分支，将 `Settings` -> `Pages` -> `Build and deployment` -> `Branch` 设置为 `gh-pages/(root)`，点击 `Save` 保存设置
 
 ![20230806125526.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230806125526.png)
 
-这时理论上就可以正常访问自己的博客了，在浏览器地址栏中输入 `https://<username>.github.io/` ，若出现MkDocs的欢迎页则说明部署成功
+这时理论上就可以正常访问自己刚刚搭建的博客了，在浏览器地址栏中输入 `https://<username>.github.io/` ，若出现MkDocs的欢迎页则说明部署成功
 
 ![20230806125801.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230806125801.png)
 
@@ -115,7 +117,7 @@ MkDocs工程的所有配置都集成在 `mkdocs.yml` 文件中
 
 ### 修改网页名称
 
-网页名称就是显示在浏览器标签以及网页左上位置的内容，默认为 `My Docs`，可以通过 `mkdocs.yml` 文件中的 `site_name` 修改
+网页名称就是显示在浏览器标签以及网页左上位置的内容，默认为 `My Docs`，可以在 `mkdocs.yml` 文件中的设置 `site_name` 来改变
 
 ```yaml title='mkdocs.yml'
 site_name: <网页名称>
@@ -123,7 +125,7 @@ site_name: <网页名称>
 
 ### 修改主题
 
-MkDocs支持多种主题，内置主题有 `mkdocs` 和 `readthedocs` ，第三方主题可以在[MkDocs Wiki](https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes)找到，也可以自定义主题
+MkDocs支持多个主题，内置主题有 `mkdocs` 和 `readthedocs` ，第三方主题可以在[MkDocs Wiki](https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes)找到，也可以自定义主题
 
 这里我是用的是比较受欢迎的 `material` 主题
 
@@ -131,7 +133,7 @@ MkDocs支持多种主题，内置主题有 `mkdocs` 和 `readthedocs` ，第三�
 pipenv install mkdocs-material
 ```
 
-`material` 主题的详细配置说明可以参阅在[Material for MkDocs (squidfunk.github.io)](https://squidfunk.github.io/mkdocs-material/)，这里我的配置是
+`material` 主题的详细配置说明可以参阅[Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)，这里我的配置如下
 
 ```yaml title='mkdocs.yml'
 theme:
@@ -153,9 +155,9 @@ markdown_extensions:
 - `language` 指定网页语言
 - `hljs_languages` 指定额外需要高亮的语言
 - `toc` 用于设置目录，`permalink: true` 表示为网页中的一级/二级/三级/...标题生成链接
-- `pymdownx.highlight` 用于设置代码高亮，`linenums: true` 表示显示行号，`anchor_linenums: true` 表示如果代码块包含行号，将用锚链接包装它们
+- `pymdownx.highlight` 用于设置代码高亮，`linenums: true` 表示显示行号，`anchor_linenums: true` 用于为代码块的行号生成链接
 - `pymdownx.inlinehilite` 启用对内联代码高亮的支持
-- `pymdownx.superfences` 是 `pymdownx.highlight` 的依赖
+- `pymdownx.superfences` 允许在代码和内容块之间任意嵌套
 
 最终效果如下
 
@@ -175,6 +177,8 @@ nav:
   - <标题>: <article>.md
 ```
 
+标题可以不设置，MkDocs按照 nav配置的标题 > 文章中定义的标题(h1) > 文件名 的顺序进行推断
+
 如果要使用多级导航，则可以这样配置
 
 ```yaml title='mkdocs.yml'
@@ -188,7 +192,28 @@ nav:
 
 ## 自动部署
 
-通过上面的设置后，每发布一篇文章，都要执行一次 `mkdocs gh-deploy`，非常哆嗦，我们可以使用Github Actions功能来帮助我们自动完成这一操作
+一般会将MkDocs源文件也推送到GitHub以防止丢失，这里我就直接推送到 `main` 分支
+
+新建 `.gitignore` 文件，忽略掉除 `docs` 、 `mkdocs.yml` 以及 `git` 相关文件之外的文件
+
+```title='.gitignore'
+/*
+!/docs
+!/mkdocs.yml
+!/.gitignore
+!/.github
+```
+
+然后我们在编写完文章后，一般至少都要执行这些命令
+
+```bash
+git add .
+git commit -m 'new article'
+git push    # 第一次push时执行git push -u origin main
+mkdocs gh-deploy
+```
+
+本着省一点是一点的原则，前面几个 `git` 相关的命令无法省略，但 `mkdocs gh-deploy` 可以通过GitHub Actions来帮助我们自动完成
 
 在仓库根目录下新建 `.github/workflows` 文件夹
 
@@ -196,9 +221,9 @@ nav:
 mkdir -p .github/workflows
 ```
 
-在 `.github/workflows` 文件夹下新建 `<xxx>.yml` 文件，文件名随意，内容如下，具体含义可以参考[Deploy MkDocs](https://github.com/marketplace/actions/deploy-mkdocs)
+在 `.github/workflows` 文件夹下新建 `gh-deploy.yml` 文件，其他文件名也可以，内容如下，具体含义可以参考[Deploy MkDocs](https://github.com/marketplace/actions/deploy-mkdocs)
 
-```yml
+```yaml title='gh-deploy.yml'
 name: Publish docs via GitHub Pages
 on:
   push:
@@ -222,27 +247,7 @@ jobs:
 
 ![20230806212318.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230806212318.png)
 
-在本地新建 `.gitignore` 文件，内容如下
-
-```title='.gitignore'
-/*
-!/docs
-!/mkdocs.yml
-!/.gitignore
-!/.github
-```
-
-然后将本地的MkDocs文件提交并推送到远程的 `main` 分支，这个分支用于保存MkDocs文档和配置
-
-```bash
-git add .
-git commit -m "update docs"
-git push -u origin main
-```
-
-当推送结束之后，GitHub就会自动帮助我们部署
-
-之后我们每次编写完文章后，只需 `git push` 即可
+这样每次编写完文章，只需成功执行 `git push` ，GitHub就会自动帮助我们部署
 
 ## 参考资料
 
