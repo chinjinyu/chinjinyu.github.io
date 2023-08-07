@@ -16,4 +16,5 @@ nav:
   - 主页: index.md
   - Web:
     - Web/使用MkDocs搭建个人博客.md
+    - Web/博客园设置Silence主题.md
 
