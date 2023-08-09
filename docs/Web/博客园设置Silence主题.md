@@ -108,6 +108,17 @@
 	* `wechat` : 微信收款码
 	* `alipay` : 支付宝收款码
 
+在“页首HTML代码”输入框中填入如下代码
+
+```html
+<div class="loading">
+  <div class="box">
+    <h2>Loading</h2>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+```
+
 ## 代码高亮及显示行号
 
 Slicence最新版本不能代码高亮和显示行号了，参见GitHub上这个[Issue #191](https://github.com/esofar/cnblogs-theme-silence/issues/191)，代码块的展示效果像这样
