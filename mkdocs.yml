@@ -17,4 +17,6 @@ nav:
   - Web:
     - Web/使用MkDocs搭建个人博客.md
     - Web/博客园设置Silence主题.md
+  - Embed:
+    - Embed/AVR汇编（一）：搭建交叉编译环境.md
 
