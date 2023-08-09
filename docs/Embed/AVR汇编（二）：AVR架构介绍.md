@@ -19,7 +19,7 @@ ATmega328P是Atmel公司（现Microchip公司）推出的一个基于AVR架构�
 | TWI | 1 |
 | 看门狗 | 1 |
 | RTC | 1 |
-| 电压 | 0~8MHz @ 2.7~5.5V<br/>0~16MHz @ 4.5~5.5V |
+| 电压 | 0~8MHz @ 2.7~5.5V <br/> 0~16MHz @ 4.5~5.5V |
 
 如下图所示，ATmega328P的AVR核心通过数据总线与各个外设相连，另外也可以发现AVR采用的是哈佛架构，Flash和SRAM相互独立，通过不同的总线与AVR核心相连。
 
@@ -77,7 +77,7 @@ ATmega328P拥有1KB的EEPROM空间，能够对其进行单字节的读写操作�
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809162534.png)
 
-AVR内核由ALU（算术逻辑单元）、SREG（状态寄存器）、通用寄存器堆、SP（最栈指针）、PC（程序计数器）构成。
+AVR内核由ALU（算术逻辑单元）、 `SREG` （状态寄存器）、通用寄存器堆、 `SP` （最栈指针）、 `PC` （程序计数器）构成。
 
 ALU能够以单周期的时间对32个通用寄存器进行算术、逻辑、位操作，一些实现中还支持乘法运算。
 
@@ -92,26 +92,26 @@ ALU能够以单周期的时间对32个通用寄存器进行算术、逻辑、位
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809165728.png)
 
-SREG（状态寄存器）包含8个标志位：
+`SREG` （状态寄存器）包含8个标志位：
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809171841.png)
 
 | 标志位 | 名称 | 描述 |
 | :---: | --- | --- |
-| I | 中断使能位 | 置位使能中断，使用 `SEL` / `CLI` 指令访问 |
-| T | 传输位 | 使用 `BLD` / `BST` 指令访问 |
-| H | 半进位标志 | 当bit 3向bit 4进位时置位 |
-| S | 符号位 | S = N xor V |
-| V | 溢出标志 | 结果超过符号数范围时置位 |
-| N | 负数标志 | 结果是负数时置位 |
-| Z | 零标志 | 结果为0时置位 |
-| C | 进位标志 | 结果超过无符号数范围时置位 |
+| `I` | 中断使能位 | 置位使能中断，使用 `SEL` / `CLI` 指令访问 |
+| `T` | 传输位 | 使用 `BLD` / `BST` 指令访问 |
+| `H` | 半进位标志 | 当bit 3向bit 4进位时置位 |
+| `S` | 符号位 | `S` = `N` xor `V` |
+| `V` | 溢出标志 | 结果超过符号数范围时置位 |
+| `N` | 负数标志 | 结果是负数时置位 |
+| `Z` | 零标志 | 结果为0时置位 |
+| `C` | 进位标志 | 结果超过无符号数范围时置位 |
 
-SP（堆栈指针）位于I/O空间，用于存储局部变量、中断和子程序的返回地址。堆栈从地址高处往低处增长，SP指向下一个可用的位置（即空减栈）。
+`SP`（堆栈指针）位于I/O空间，用于存储局部变量、中断和子程序的返回地址。堆栈从地址高处往低处增长，`SP`指向下一个可用的位置（即空减栈）。
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809173022.png)
 
-PC（程序计数器）指向下一条执行指令的地址。ATmega328P的PC为14位宽度，由于Flash存储单元是16位宽，所以可以寻址2^14=16K个字（即32KB）。上电时，PC的值为0x0000。
+`PC` （程序计数器）指向下一条执行指令的地址。ATmega328P的 `PC` 为14位宽度，由于Flash存储单元是16位宽，所以可以寻址2^14=16K个字（即32KB）。上电时，`PC` 的值为0x0000。
 
 ## 参考资料
 
