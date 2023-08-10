@@ -169,10 +169,10 @@ LPM R16, Z+    ; R16 <- (Z), Z <- Z + 1
 例如：
 
 ```asm
-	JMP FUNC    ; PC <- FUNC
-	...
+    JMP FUNC    ; PC <- FUNC
+    ...
 FUNC:
-	...
+    ...
 ```
 
 ### 间接寻址
@@ -196,10 +196,10 @@ IJMP    ; PC <- Z
 例如：
 
 ```asm
-	RJMP FUNC    ; PC <- FUNC 汇编器会自动计算k的值
-	...
+    RJMP FUNC    ; PC <- FUNC 汇编器会自动计算k的值
+    ...
 FUNC:            ; FUNC与RJMP指令的距离不能超过-2048~2047
-	...
+    ...
 ```
 
 ## 参考资料
