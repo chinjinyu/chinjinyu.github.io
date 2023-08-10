@@ -37,7 +37,7 @@ ATmega328P的程序空间分为两个部分：Application和Bootloader。Bootloa
 
 可以通过 `LPM` 指令访问整个程序空间。
 
-![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809153807.png)
+![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810152304.png)
 
 ### Data Memory
 
@@ -48,7 +48,7 @@ ATmega328P的数据空间大小为2303字节，由4个部分组成：
 - I/O空间：包含64个I/O寄存器。
 	- 通过 `IN` / `OUT` 指令访问时，I/O空间独立编址到0x00~0x3F；
 	- 通过 `LD` / `LDS` / `LDD` / `ST` / `STS` / `STD` 访问时，地址为I/O地址+0x20；
-	- I/O地址为0x00~0x1F的寄存器支持位寻址，可以通过 `SBI` / `CBI` / `SBIS` / `SBIC` 指令访问。
+	- I/O地址为0x00~0x1F的寄存器支持按位访问，可以通过 `SBI` / `CBI` / `SBIS` / `SBIC` 指令访问。
 - 扩展I/O空间：包含160个扩展I/O寄存器。
 	- 只能通过 `LD` / `LDS` / `LDD` / `ST` / `STS` / `STD` 指令访问。
 - SRAM空间：2KB，地址从0x0100开始。
@@ -57,15 +57,15 @@ ATmega328P的数据空间大小为2303字节，由4个部分组成：
 
 - 直接寻址（direct）；
 - 间接寻址（indirect）；
-- 带偏移的间接寻址（indirect with displacement）；
-- 带前自减的间接寻址（indirect with pre-decrement）；
-- 带后自增的间接寻址（indirect with post-increment）。
+- 带偏移量的间接寻址（indirect with displacement）；
+- 带前缀自减的间接寻址（indirect with pre-decrement）；
+- 带后缀自增的间接寻址（indirect with post-increment）。
 
-![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809153831.png)
+![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810152329.png)
 
-对SRAM的访问需要耗费2个CPU周期。
+如下图所示，可以看出对SRAM的访问需要耗费2个CPU周期。
 
-![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809160047.png)
+![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810152403.png)
 
 ### EEPROM Memory
 
@@ -88,9 +88,9 @@ ALU能够以单周期的时间对32个通用寄存器进行算术、逻辑、位
 - 2个8位操作数，1个16位结果；
 - 1个16位操作数，1个16位结果。
 
-其中，只有 `r16` 至 `r31` 支持立即数寻址，`r26` 至 `r31` 可以两两组合为索引寄存器 `X` 、 `Y` 、 `Z` ，供间接寻址时使用。
+其中，只有 `R16` 至 `R31` 支持立即寻址，`R26` 至 `R31` 可以两两组合为索引寄存器 `X` 、 `Y` 、 `Z` ，供间接寻址时使用。
 
-![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230809165728.png)
+![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810152530.png)
 
 `SREG` （状态寄存器）包含8个标志位：
 
