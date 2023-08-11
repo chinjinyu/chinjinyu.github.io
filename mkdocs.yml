@@ -21,4 +21,5 @@ nav:
     - Embed/AVR汇编（一）：搭建交叉编译环境.md
     - Embed/AVR汇编（二）：AVR架构介绍.md
     - Embed/AVR汇编（三）：寻址方式.md
+    - Embed/AVR汇编（四）：数据传送指令.md
 
