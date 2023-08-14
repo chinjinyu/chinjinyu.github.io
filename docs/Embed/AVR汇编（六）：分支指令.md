@@ -1,6 +1,10 @@
 # AVR汇编（六）：分支指令
 
-## `JMP`
+分支指令用于改变程序的执行流，分为无条件分支和条件分支两类。
+
+## 无条件分支指令
+
+### `JMP`
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230813191745.png)
 
@@ -29,7 +33,7 @@ f3:
 
 注意：实测在GNU汇编下， `IJMP` 指令中不能直接把标签赋值给 `Z` 寄存器，因为标签表示的地址的单位是字节，而 `Z` 寄存器中存放的应该是字地址，所以要将标签右移一位传给 `Z` 寄存器。而 `JMP` 指令和 `RJMP` 指令则可以直接传标签。
 
-## `CALL` / `RET`
+### `CALL` / `RET`
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230813200102.png)
 
@@ -63,7 +67,9 @@ XXX_IRQHandler:
     RETI               ; 中断子程序返回
 ```
 
-## `CP`
+## 条件分支指令
+
+### `CP`
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230814101058.png)
 
@@ -93,7 +99,7 @@ f3:
     RJMP f3
 ```
 
-## `SBxx`
+### `SBxx`
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230814103112.png)
 
@@ -110,7 +116,7 @@ f1:
     RJMP f1
 ```
 
-## `BRxx`
+### `BRxx`
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230814103542.png)
 
