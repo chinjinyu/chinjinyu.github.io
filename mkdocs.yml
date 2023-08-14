@@ -24,4 +24,5 @@ nav:
     - Embed/AVR汇编（四）：数据传送指令.md
     - Embed/AVR汇编（五）：算术和逻辑指令.md
     - Embed/AVR汇编（六）：分支指令.md
+    - Embed/AVR汇编（七）：位操作和MCU控制指令.md
 
