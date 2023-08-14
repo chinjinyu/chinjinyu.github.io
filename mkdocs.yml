@@ -23,4 +23,5 @@ nav:
     - Embed/AVR汇编（三）：寻址方式.md
     - Embed/AVR汇编（四）：数据传送指令.md
     - Embed/AVR汇编（五）：算术和逻辑指令.md
+    - Embed/AVR汇编（六）：分支指令.md
 
