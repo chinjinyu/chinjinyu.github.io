@@ -7,6 +7,7 @@ ATmega328P是Atmel公司（现Microchip公司）推出的一个基于AVR架构�
 | 资源 | 主要特征 |
 | :---: | :---: |
 | Flash | 32KB |
+| SRAM | 2048B |
 | 频率 | 16MHz |
 | EEPROM | 1024B |
 | 定时器 | 2个8bit，1个16bit |
