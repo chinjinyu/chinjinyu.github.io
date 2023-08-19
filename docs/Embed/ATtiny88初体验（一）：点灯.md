@@ -26,7 +26,7 @@ MH-ET LIVE Tiny88的引脚图如下：
 
 ![MHET_Tiny.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/MHET_Tiny.png)
 
-板子共引出了26个IO口，少了的2个IO口是PB6和PC6，其中PB6没有引出，可以通过熔丝位将RST引脚配置为PC6。另外，1号和2号引脚是连接到USB口的，供VUSB使用，最好不要用作他用。
+板子共引出了26个IO口，少了的2个IO口是PB6和PC6，其中PB6没有引出，可以通过熔丝位将RST引脚配置为PC6。另外，1号和2号引脚是连接到USB口的，供VUSB使用，最好不要另作他用。
 
 值得注意的是，板子搭载的晶振频率为16MHz，已经超过了[ATtiny88手册](https://ww1.microchip.com/downloads/en/DeviceDoc/doc8008.pdf)里标明的最大工作频率12MHz，超频了33%。
 
@@ -65,9 +65,9 @@ ATtiny88拥有3个字节的熔丝位，和一般的逻辑相反，熔丝位中�
 
 ### 修改熔丝位
 
-在Windows环境下，可以借助[ProgISP](https://github.com/gen-so/PROGISP-V1.72)软件查看和修改熔丝位。
+在Windows环境下，可以借助[PROGISP](https://github.com/gen-so/PROGISP-V1.72)软件查看和修改熔丝位。
 
-通过USBasp将核心板与电脑连接，打开ProgISP软件，在“Select Chip”下选择“ATtiny88”，点击“RD”按钮，如果连接没有问题，会提示“读出ID成功”。
+通过USBasp将核心板与电脑连接，打开PROGISP软件，在“Select Chip”下选择“ATtiny88”，点击“RD”按钮，如果连接没有问题，会提示“读出ID成功”。
 
 ![image.png](https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230819144736.png)
 
@@ -241,6 +241,8 @@ make
 ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", MODE="664", GROUP="plugdev"
 ```
 
+其中，注意 `idVector` 和 `idProduct` 需要根据实际情况填写。
+
 安装 `avrdude` 软件：
 
 ```bash
@@ -276,5 +278,5 @@ avrdude -c usbasp -p t88 -U flash:w:build/led.hex:i
 ## 参考资料
 
 1. [ATtiny88 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/doc8008.pdf)
-2. [ProgISP](https://github.com/gen-so/PROGISP-V1.72)
+2. [PROGISP](https://github.com/gen-so/PROGISP-V1.72)
 3. [AVRDUDE User Manual](https://www.nongnu.org/avrdude/user-manual/avrdude.html)
