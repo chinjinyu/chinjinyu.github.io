@@ -10,8 +10,14 @@ markdown_extensions:
   - pymdownx.highlight:
       linenums: true
       anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
   - pymdownx.inlinehilite
   - pymdownx.superfences
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 nav:
   - 主页: index.md
   - Web:
@@ -26,4 +32,5 @@ nav:
     - Embed/AVR汇编（六）：分支指令.md
     - Embed/AVR汇编（七）：位操作和MCU控制指令.md
     - Embed/ATtiny88初体验（一）：点灯.md
+    - Embed/ATtiny88初体验（二）：呼吸灯.md
 
