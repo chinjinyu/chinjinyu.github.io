@@ -33,4 +33,5 @@ nav:
     - Embed/AVR汇编（七）：位操作和MCU控制指令.md
     - Embed/ATtiny88初体验（一）：点灯.md
     - Embed/ATtiny88初体验（二）：呼吸灯.md
+    - Embed/ATtiny88初体验（三）：串口.md
 
