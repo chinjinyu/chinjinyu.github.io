@@ -366,5 +366,5 @@ static void stdio_setup(void)
 
 ## 参考资料
 
-1. [avr-libc: <stdio.h>: Standard IO facilities](https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html)
+1. [avr-libc: Standard IO facilities](https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html)
 2. [ATtiny88 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/doc8008.pdf)
