@@ -1,0 +1,1129 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/">
+      
+      
+        <link rel="next" href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E6%8C%87%E4%BB%A4/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>AVR汇编（四）：数据传送指令 - Chin's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#avr" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Chin&#39;s Blog" class="md-header__button md-logo" aria-label="Chin's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Chin's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AVR汇编（四）：数据传送指令
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Chin&#39;s Blog" class="md-nav__button md-logo" aria-label="Chin's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Chin's Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        主页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Web
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Web
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web/%E4%BD%BF%E7%94%A8MkDocs%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        使用MkDocs搭建个人博客
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web/%E5%8D%9A%E5%AE%A2%E5%9B%AD%E8%AE%BE%E7%BD%AESilence%E4%B8%BB%E9%A2%98/" class="md-nav__link">
+        博客园设置Silence主题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="true">
+          Embed
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Embed" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Embed
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%90%AD%E5%BB%BA%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/" class="md-nav__link">
+        AVR汇编（一）：搭建交叉编译环境
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AAVR%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        AVR汇编（二）：AVR架构介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/" class="md-nav__link">
+        AVR汇编（三）：寻址方式
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          AVR汇编（四）：数据传送指令
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        AVR汇编（四）：数据传送指令
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    汇编程序的编写、编译和调试
+  </a>
+  
+    <nav class="md-nav" aria-label="汇编程序的编写、编译和调试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    伪指令
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    第一个汇编程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    调试程序
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    数据传送指令
+  </a>
+  
+    <nav class="md-nav" aria-label="数据传送指令">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mov" class="md-nav__link">
+    MOV
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ld" class="md-nav__link">
+    LD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#st" class="md-nav__link">
+    ST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lpm-spm" class="md-nav__link">
+    LPM / SPM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-out" class="md-nav__link">
+    IN / OUT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push-pop" class="md-nav__link">
+    PUSH / POP
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    参考资料
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        AVR汇编（五）：算术和逻辑指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        AVR汇编（六）：分支指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E4%BD%8D%E6%93%8D%E4%BD%9C%E5%92%8CMCU%E6%8E%A7%E5%88%B6%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        AVR汇编（七）：位操作和MCU控制指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%82%B9%E7%81%AF/" class="md-nav__link">
+        ATtiny88初体验（一）：点灯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%91%BC%E5%90%B8%E7%81%AF/" class="md-nav__link">
+        ATtiny88初体验（二）：呼吸灯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E4%B8%B2%E5%8F%A3/" class="md-nav__link">
+        ATtiny88初体验（三）：串口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%9C%8B%E9%97%A8%E7%8B%97/" class="md-nav__link">
+        ATtiny88初体验（四）：看门狗
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9AADC/" class="md-nav__link">
+        ATtiny88初体验（五）：ADC
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9ASPI/" class="md-nav__link">
+        ATtiny88初体验（六）：SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9ATWI/" class="md-nav__link">
+        ATtiny88初体验（七）：TWI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    汇编程序的编写、编译和调试
+  </a>
+  
+    <nav class="md-nav" aria-label="汇编程序的编写、编译和调试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    伪指令
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    第一个汇编程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    调试程序
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    数据传送指令
+  </a>
+  
+    <nav class="md-nav" aria-label="数据传送指令">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mov" class="md-nav__link">
+    MOV
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ld" class="md-nav__link">
+    LD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#st" class="md-nav__link">
+    ST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lpm-spm" class="md-nav__link">
+    LPM / SPM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-out" class="md-nav__link">
+    IN / OUT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push-pop" class="md-nav__link">
+    PUSH / POP
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    参考资料
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="avr">AVR汇编（四）：数据传送指令<a class="headerlink" href="#avr" title="Permanent link">&para;</a></h1>
+<p>AVR指令主要分为五类：算术和逻辑指令、分支指令、位操作指令、数据传送指令、MCU控制指令，今天我们先来认识其中最常用的数据传送指令。</p>
+<h2 id="_1">汇编程序的编写、编译和调试<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>学习任何技术都离不开实践，汇编语言也是如此。在正式学习指令前，我们先来体验一下汇编程序从编写到编译，再到调试的整个过程。</p>
+<h3 id="_2">伪指令<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>根据<a href="https://baike.baidu.com/item/%E4%BC%AA%E6%8C%87%E4%BB%A4">百度百科</a>：伪指令(Pseudo Instruction)是用于对汇编过程进行控制的指令，该类指令并不是可执行指令，没有机器代码，只用于汇编过程中为汇编程序提供汇编信息。</p>
+<p>下面是几个常用的伪指令：</p>
+<table>
+<thead>
+<tr>
+<th>伪指令</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.section</code></td>
+<td>定义一个段</td>
+<td><code>.section .text</code> <br/> <code>.section .data</code></td>
+</tr>
+<tr>
+<td><code>.global</code></td>
+<td>定义一个全局符号</td>
+<td><code>.global _start</code></td>
+</tr>
+<tr>
+<td><code>.byte</code></td>
+<td>定义一个字节数据</td>
+<td><code>.byte 0x01</code></td>
+</tr>
+<tr>
+<td><code>.word</code></td>
+<td>定义一个字数据</td>
+<td><code>.word 0x3412</code></td>
+</tr>
+<tr>
+<td><code>.ascii</code></td>
+<td>定义一个字符串数据</td>
+<td><code>.ascii "hello"</code></td>
+</tr>
+<tr>
+<td><code>.align</code></td>
+<td>设置对齐方式</td>
+<td><code>.align 4</code></td>
+</tr>
+<tr>
+<td><code>.equ</code></td>
+<td>定义一个符号常量，类似于C宏定义</td>
+<td><code>.equ INT8_MAX, 0xFF</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">第一个汇编程序<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">hello.s</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="na">.equ</span><span class="w"> </span><span class="no">PINB</span><span class="p">,</span><span class="w"> </span><span class="mi">0x03</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="na">.equ</span><span class="w"> </span><span class="no">DDRB</span><span class="p">,</span><span class="w"> </span><span class="mi">0x04</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="na">.equ</span><span class="w"> </span><span class="no">PORTB</span><span class="p">,</span><span class="w"> </span><span class="mi">0x05</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="na">.section</span><span class="w"> </span><span class="no">.text</span><span class="w">        </span><span class="c1">; 定义text段</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="na">.global</span><span class="w"> </span><span class="no">_start</span><span class="w">        </span><span class="c1">; 定义一个全局符号_start</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="nl">_start:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nf">LDI</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0x20</span><span class="w">     </span><span class="c1">; R16 = 0x20</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="nf">OUT</span><span class="w"> </span><span class="no">DDRB</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">     </span><span class="c1">; 设置PB5为输出</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nf">OUT</span><span class="w"> </span><span class="no">PORTB</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">    </span><span class="c1">; PB5初始输出高电平</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="nl">loop:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="nf">OUT</span><span class="w"> </span><span class="no">PINB</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">     </span><span class="c1">; 翻转PB5电平</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="nf">RJMP</span><span class="w"> </span><span class="no">loop</span><span class="w">         </span><span class="c1">; 跳转到loop处继续执行</span>
+</code></pre></div></td></tr></table></div>
+<p>上述程序实现的功能很简单，就是不断翻转PB5的电平状态。</p>
+<p>使用下面的命令进行编译，生成elf文件：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>avr-gcc<span class="w"> </span>-mmcu<span class="o">=</span>atmega328p<span class="w"> </span>-x<span class="w"> </span>assembler-with-cpp<span class="w"> </span>-g<span class="w"> </span>-Og<span class="w"> </span>-Wall<span class="w"> </span>-c<span class="w"> </span>-o<span class="w"> </span>hello.o<span class="w"> </span>hello.s
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>avr-gcc<span class="w"> </span>-mmcu<span class="o">=</span>atmega328p<span class="w"> </span>-nostartfiles<span class="w"> </span>-o<span class="w"> </span>hello.elf<span class="w"> </span>hello.o
+</code></pre></div></td></tr></table></div>
+<p>其中， <code>-x assembler-with-cpp</code> 表示编译汇编程序， <code>-nostartfiles</code> 表示不添加默认启动文件，启动文件的作用是初始化MCU，创建C语言运行环境，由于这里编写的是汇编程序，所以不需要它，否则编译时会提示找不到 <code>main</code> 函数。</p>
+<p>为了以后每次重新编译的时候不用都输一遍命令，可以写一个 <code>Makefile</code> 文件：</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Makefile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">clean</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nv">TARGET</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>hello
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>.<span class="n">elf</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="nf">%.o</span><span class="o">:</span><span class="w"> </span>%.<span class="n">s</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span>avr-gcc<span class="w"> </span>-mmcu<span class="o">=</span>atmega328p<span class="w"> </span>-x<span class="w"> </span>assembler-with-cpp<span class="w"> </span>-g<span class="w"> </span>-Og<span class="w"> </span>-Wall<span class="w"> </span>-c<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span><span class="w"> </span>$&lt;
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="nf">$(TARGET).elf</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>.<span class="n">o</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">        </span>avr-gcc<span class="w"> </span>-mmcu<span class="o">=</span>atmega328p<span class="w"> </span>-nostartfiles<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span><span class="w"> </span>$&lt;
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="nf">clean</span><span class="o">:</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">        </span>rm<span class="w"> </span>-f<span class="w"> </span>*.o<span class="w"> </span><span class="k">$(</span>TARGET<span class="k">)</span>.elf
+</code></pre></div></td></tr></table></div>
+<h3 id="_4">调试程序<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>使用 <code>simavr</code> 对上面生成的elf文件进行仿真：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>simavr<span class="w"> </span>-f<span class="w"> </span><span class="m">16000000</span><span class="w"> </span>-m<span class="w"> </span>atmega328p<span class="w"> </span>--gdb<span class="w"> </span>hello.elf
+</code></pre></div></td></tr></table></div>
+<p>为了方便，可以在 <code>Makefile</code> 中添加一个 <code>run</code> 伪目标，将上面的命令添加进去：</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Makefile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">clean</span> <span class="n">run</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="err">...</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="nf">run</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>.<span class="n">elf</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">        </span>simavr<span class="w"> </span>-f<span class="w"> </span><span class="m">16000000</span><span class="w"> </span>-m<span class="w"> </span>atmega328p<span class="w"> </span>--gdb<span class="w"> </span>$&lt;
+</code></pre></div></td></tr></table></div>
+<p>之后需要仿真时，直接执行 <code>make run</code> 即可。</p>
+<p>使用 <code>avr-gdb</code> 对程序进行调试， <code>simavr</code> 的GDB端口是 <code>1234</code> ：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>avr-gdb<span class="w"> </span>-ex<span class="w"> </span><span class="s2">&quot;target remote localhost:1234&quot;</span><span class="w"> </span>-ex<span class="w"> </span><span class="s2">&quot;layout split&quot;</span><span class="w"> </span>-q<span class="w"> </span>--tui<span class="w"> </span>hello.elf
+</code></pre></div></td></tr></table></div>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230811205142.png" /></p>
+<p>在GDB窗口中，可以输入 <code>s</code> 进行单步执行。</p>
+<p>为了观察 <code>PINB</code> 、 <code>DDRB</code> 、 <code>PORTB</code> 寄存器的值，可以借助 <code>x/&lt;n/f/u&gt; &lt;addr&gt;</code> 命令，其中 <code>n</code> 表示要查看的值的个数； <code>f</code> 指定显示格式，如果要十六进制显示，这里就要指定 <code>x</code> ； <code>u</code> 表示值的单位，如果单位是字节，这里就要指定 <code>b</code> 。这条命令的具体使用方法可以通过 <code>help x</code> 命令查看。</p>
+<p>这里我们查看从I/O地址0x03开始的3个字节：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>x/3xb 0x03      # 注意，这里的地址是错误的！
+</code></pre></div></td></tr></table></div>
+<p>结果如下：</p>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230811203159.png" /></p>
+<p>发现读取的值并不符合我们的预期，这是因为上面命令中的地址设置错了，有两个因素：</p>
+<ol>
+<li><code>PINB</code> 、 <code>DDRB</code> 、 <code>PORTB</code> 在I/O空间的地址是0x03开始，而在数据空间中的地址需要加上0x20；</li>
+<li>AVR的程序空间和数据空间是分别独立编址的，因此地址存在重叠情况。通过 <code>avr-readelf -S hello.elf</code> 查看，可以发现 <code>.data</code> 段的地址是从0x800100开始的，而实际的SRAM地址是从 <code>0x0100</code> 开始的，因此可以知道elf文件中数据空间的地址还需要加上0x800000，如果不加，则代表的是 <code>.text</code> 段（Flash）的地址。</li>
+</ol>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230811203940.png" /></p>
+<p>通过上面的分析，将命令中的地址改为0x800023即可正确查看 <code>PINB</code> 、 <code>DDRB</code> 、 <code>PORTB</code> 中的内容：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>x/3xb 0x800023
+</code></pre></div></td></tr></table></div>
+<p>结果如下：</p>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230811204809.png" /></p>
+<p>这样显示的结果与我们的程序逻辑是一致的。</p>
+<h2 id="_5">数据传送指令<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>由于AVR具有多种寻址方式，因此数据传送指令也对应有多种。</p>
+<table>
+<thead>
+<tr>
+<th>空间</th>
+<th>指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>寄存器堆</td>
+<td><code>MOV</code></td>
+</tr>
+<tr>
+<td>数据空间</td>
+<td><code>LD</code> / <code>ST</code></td>
+</tr>
+<tr>
+<td>程序空间</td>
+<td><code>LPM</code> / <code>SPM</code></td>
+</tr>
+<tr>
+<td>I/O空间</td>
+<td><code>IN</code> / <code>OUT</code></td>
+</tr>
+<tr>
+<td>栈空间</td>
+<td><code>PUSH</code> / <code>POP</code></td>
+</tr>
+</tbody>
+</table>
+<p>一般而言，AVR指令如果有两个操作数，则第一个是目的操作数，第二个是源操作数。</p>
+<h3 id="mov"><code>MOV</code><a class="headerlink" href="#mov" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810172617.png" /></p>
+<p><code>MOV</code> 指令用于寄存器之间的数据传送（一个字节），后缀如果加 <code>W</code> 表示传送一个字的数据。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nf">LDI</span><span class="w">  </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0x10</span><span class="w">    </span><span class="c1">; R16 = 0x10</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="nf">MOV</span><span class="w">  </span><span class="no">R0</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">      </span><span class="c1">; R0 = 0x10</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="nf">LDI</span><span class="w">  </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0x20</span><span class="w">    </span><span class="c1">; R16 = 0x20</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="nf">LDI</span><span class="w">  </span><span class="no">R17</span><span class="p">,</span><span class="w"> </span><span class="mi">0x30</span><span class="w">    </span><span class="c1">; R17 = 0x30</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="nf">MOVW</span><span class="w"> </span><span class="no">R0</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">      </span><span class="c1">; R0 = 0x20, R1 = 0x30</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="ld"><code>LD</code><a class="headerlink" href="#ld" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810174553.png" /></p>
+<p><code>LD</code> 指令用于将数据从数据空间加载到寄存器中，后缀加 <code>I</code> 表示加载立即数，加 <code>D</code> 表示偏移量寻址，加 <code>S</code> 表示直接寻址。</p>
+<p><code>X</code> / <code>Y</code> / <code>Z</code> 寄存器可以用于间接寻址，如果前缀加 <code>-</code> ，表示执行操作前寄存器的值自减一，如果后缀加 <code>+</code> ，表示执行操作后寄存器的值自加一。</p>
+<p><code>Y</code> / <code>Z</code> 寄存器可以用于偏移量寻址（注意不包括 <code>X</code> 寄存器），后面加 <code>+q</code> 表示偏移量为 <code>q</code> 。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0xAA</span><span class="w">    </span><span class="c1">; R16 = 0xAA</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">XL</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">XH</span><span class="p">,</span><span class="w"> </span><span class="mi">0x01</span><span class="w">     </span><span class="c1">; X = 0x0100</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="nf">ST</span><span class="w">  </span><span class="no">X</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">       </span><span class="c1">; (0x0100) = 0xAA</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="nf">LD</span><span class="w">  </span><span class="no">R0</span><span class="p">,</span><span class="w"> </span><span class="no">X</span><span class="err">+</span><span class="w">       </span><span class="c1">; R0 = 0xAA, X = 0x0101</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">ZL</span><span class="p">,</span><span class="w"> </span><span class="mi">0xF1</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">ZH</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span><span class="w">     </span><span class="c1">; Z = 0x00F1</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="nf">LDD</span><span class="w"> </span><span class="no">R1</span><span class="p">,</span><span class="w"> </span><span class="no">Z</span><span class="err">+</span><span class="mi">0xF</span><span class="w">    </span><span class="c1">; R1 = 0xAA</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="nf">LDS</span><span class="w"> </span><span class="no">R2</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0100</span><span class="w">   </span><span class="c1">; R2 = 0xAA</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="st"><code>ST</code><a class="headerlink" href="#st" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810182944.png" /></p>
+<p><code>ST</code> 指令用于将数据从寄存器写入到数据空间中，后缀加 <code>D</code> / <code>S</code> 的意义同 <code>LD</code> ，注意 <code>ST</code> 不支持立即寻址，即没有 <code>STI</code> 这样的指令！</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0x55</span><span class="w">    </span><span class="c1">; R16 = 0x55</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">XL</span><span class="p">,</span><span class="w"> </span><span class="mi">0x80</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">XH</span><span class="p">,</span><span class="w"> </span><span class="mi">0x01</span><span class="w">     </span><span class="c1">; X = 0x0180</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nf">ST</span><span class="w">  </span><span class="no">X</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">       </span><span class="c1">; (0x0180) = 0x55</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="nf">LD</span><span class="w">  </span><span class="no">R0</span><span class="p">,</span><span class="w"> </span><span class="no">X</span><span class="w">        </span><span class="c1">; R0 = 0x55</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0xAA</span><span class="w">    </span><span class="c1">; R16 = 0xAA</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">ZL</span><span class="p">,</span><span class="w"> </span><span class="mi">0x50</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">ZH</span><span class="p">,</span><span class="w"> </span><span class="mi">0x01</span><span class="w">     </span><span class="c1">; Z = 0x0150</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="nf">STD</span><span class="w"> </span><span class="no">Z</span><span class="err">+</span><span class="mi">0x30</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">  </span><span class="c1">; (0x0180) = 0xAA</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="nf">LD</span><span class="w">  </span><span class="no">R1</span><span class="p">,</span><span class="w"> </span><span class="no">X</span><span class="w">        </span><span class="c1">; R1 = 0xAA</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0xA5</span><span class="w">    </span><span class="c1">; R16 = 0xA5</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="nf">STS</span><span class="w"> </span><span class="mi">0x0180</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">  </span><span class="c1">; (0x0180) = 0xA5</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="nf">LD</span><span class="w">  </span><span class="no">R2</span><span class="p">,</span><span class="w"> </span><span class="no">X</span><span class="w">        </span><span class="c1">; R2 = 0xA5</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="lpm-spm"><code>LPM</code> / <code>SPM</code><a class="headerlink" href="#lpm-spm" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810201004.png" /></p>
+<p><code>LPM</code> / <code>SPM</code> 指令用于将数据从程序空间加载到寄存器/从寄存器写入到程序空间。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">ZL</span><span class="p">,</span><span class="w"> </span><span class="no">lo8</span><span class="p">(</span><span class="no">const</span><span class="p">)</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nf">LDI</span><span class="w"> </span><span class="no">ZH</span><span class="p">,</span><span class="w"> </span><span class="no">hi8</span><span class="p">(</span><span class="no">const</span><span class="p">)</span><span class="w">      </span><span class="c1">; Z = const</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nf">LPM</span><span class="w"> </span><span class="no">R0</span><span class="p">,</span><span class="w"> </span><span class="no">Z</span><span class="err">+</span><span class="w">              </span><span class="c1">; R0 = 0xA5, Z = CONST + 1</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="nf">LPM</span><span class="w"> </span><span class="no">R1</span><span class="p">,</span><span class="w"> </span><span class="no">Z</span><span class="err">+</span><span class="w">              </span><span class="c1">; R1 = 0x5A, Z = CONST + 2</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="nf">LPM</span><span class="w"> </span><span class="no">R2</span><span class="p">,</span><span class="w"> </span><span class="no">Z</span><span class="err">+</span><span class="w">              </span><span class="c1">; R2 = 0x55, Z = CONST + 3</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="nf">LPM</span><span class="w"> </span><span class="no">R3</span><span class="p">,</span><span class="w"> </span><span class="no">Z</span><span class="w">               </span><span class="c1">; R3 = 0xAA</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="nl">const:</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0xA5</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x5A</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="na">.word</span><span class="w"> </span><span class="mi">0xAA55</span>
+</code></pre></div></td></tr></table></div>
+<p><code>SPM</code> 指令的用法较为特殊，后面有机会再来介绍。</p>
+<h3 id="in-out"><code>IN</code> / <code>OUT</code><a class="headerlink" href="#in-out" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810214837.png" /></p>
+<p><code>IN</code> / <code>OUT</code> 用于从I/O空间读入数据到寄存器/向I/O空间写入寄存器中的数据，注意 <code>P</code> 为I/O空间的地址，此命令不能访问扩展I/O空间。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nf">OUT</span><span class="w"> </span><span class="no">DDRB</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span><span class="w">    </span><span class="c1">; DDRB = 0xAA</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="nf">IN</span><span class="w">  </span><span class="no">R0</span><span class="p">,</span><span class="w"> </span><span class="no">DDRB</span><span class="w">      </span><span class="c1">; R0 = 0xAA</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="push-pop"><code>PUSH</code> / <code>POP</code><a class="headerlink" href="#push-pop" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810220030.png" /></p>
+<p><code>PUSH</code> / <code>POP</code> 用于将数据压入/弹出栈，使用时需要注意SP的初始值要设置正确（AVR是空减栈），并要避免出现栈溢出的情况。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nf">LDI</span><span class="w">  </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0xA5</span><span class="w">    </span><span class="c1">; R16 = 0xA5</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="nf">PUSH</span><span class="w"> </span><span class="no">R16</span><span class="w">          </span><span class="c1">; (SP) = 0xA5, SP -= 1</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="nf">POP</span><span class="w">  </span><span class="no">R0</span><span class="w">           </span><span class="c1">; R0 = 0xA5, SP += 1</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_6">参考资料<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf">ATmega328P Datasheet</a></li>
+<li><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/AVR-InstructionSet-Manual-DS40002198.pdf">AVR Instruction Set Manual</a></li>
+<li><a href="https://baike.baidu.com/item/%E4%BC%AA%E6%8C%87%E4%BB%A4">百度百科 - 伪指令</a></li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1061 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AAVR%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D/">
+      
+      
+        <link rel="next" href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>AVR汇编（三）：寻址方式 - Chin's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#avr" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Chin&#39;s Blog" class="md-header__button md-logo" aria-label="Chin's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Chin's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AVR汇编（三）：寻址方式
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Chin&#39;s Blog" class="md-nav__button md-logo" aria-label="Chin's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Chin's Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        主页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Web
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Web
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web/%E4%BD%BF%E7%94%A8MkDocs%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="md-nav__link">
+        使用MkDocs搭建个人博客
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Web/%E5%8D%9A%E5%AE%A2%E5%9B%AD%E8%AE%BE%E7%BD%AESilence%E4%B8%BB%E9%A2%98/" class="md-nav__link">
+        博客园设置Silence主题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="true">
+          Embed
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Embed" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Embed
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%90%AD%E5%BB%BA%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/" class="md-nav__link">
+        AVR汇编（一）：搭建交叉编译环境
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AAVR%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        AVR汇编（二）：AVR架构介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          AVR汇编（三）：寻址方式
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        AVR汇编（三）：寻址方式
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    寄存器堆的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="寄存器堆的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    立即寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    单寄存器寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    双寄存器寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    I/O空间的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="I/O空间的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    直接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    位寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    数据空间的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="数据空间的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    直接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    带前缀自减的间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    带后缀自增的间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    带偏移量的间接寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    程序空间的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="程序空间的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    常量寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    带后缀自增的常量寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    直接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    相对寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    参考资料
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        AVR汇编（四）：数据传送指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        AVR汇编（五）：算术和逻辑指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        AVR汇编（六）：分支指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AVR%E6%B1%87%E7%BC%96%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E4%BD%8D%E6%93%8D%E4%BD%9C%E5%92%8CMCU%E6%8E%A7%E5%88%B6%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        AVR汇编（七）：位操作和MCU控制指令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%82%B9%E7%81%AF/" class="md-nav__link">
+        ATtiny88初体验（一）：点灯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%91%BC%E5%90%B8%E7%81%AF/" class="md-nav__link">
+        ATtiny88初体验（二）：呼吸灯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E4%B8%B2%E5%8F%A3/" class="md-nav__link">
+        ATtiny88初体验（三）：串口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%9C%8B%E9%97%A8%E7%8B%97/" class="md-nav__link">
+        ATtiny88初体验（四）：看门狗
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9AADC/" class="md-nav__link">
+        ATtiny88初体验（五）：ADC
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9ASPI/" class="md-nav__link">
+        ATtiny88初体验（六）：SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ATtiny88%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9ATWI/" class="md-nav__link">
+        ATtiny88初体验（七）：TWI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    寄存器堆的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="寄存器堆的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    立即寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    单寄存器寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    双寄存器寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    I/O空间的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="I/O空间的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    直接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    位寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    数据空间的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="数据空间的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    直接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    带前缀自减的间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    带后缀自增的间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    带偏移量的间接寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    程序空间的寻址方式
+  </a>
+  
+    <nav class="md-nav" aria-label="程序空间的寻址方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    常量寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    带后缀自增的常量寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    直接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    间接寻址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    相对寻址
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    参考资料
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="avr">AVR汇编（三）：寻址方式<a class="headerlink" href="#avr" title="Permanent link">&para;</a></h1>
+<p>AVR具有多种寻址方式，在介绍具体的汇编指令之前，有必要对它们做一定了解。</p>
+<p>前面介绍过，AVR将内存空间分为多个部分：寄存器堆、I/O空间、数据空间、程序空间。这些空间支持的指令和寻址方式都各不相同。</p>
+<h2 id="_1">寄存器堆的寻址方式<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>AVR中寄存器堆的寻址方式分为3种：立即寻址、单寄存器寻址、双寄存器寻址。</p>
+<h3 id="_2">立即寻址<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>所谓立即寻址，就是指操作数直接编码在指令中。需要注意的是，只有 <code>R16</code> ~ <code>R31</code> 寄存器支持立即寻址。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">ANDI</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0x01</span><span class="w">    </span><span class="c1">; R16 &lt;- R16 &amp; 0x01</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_3">单寄存器寻址<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810115330.png" /></p>
+<p>在单寄存器寻址方式下，操作数存放在目的寄存器 <code>Rd</code> 中。</p>
+<p>例如:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nf">INC</span><span class="w"> </span><span class="no">R16</span><span class="w">    </span><span class="c1">; R16 &lt;- R16 + 1</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_4">双寄存器寻址<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810115923.png" /></p>
+<p>在双寄存器寻址方式下，操作数分别存放在源寄存器 <code>Rr</code> 和目的寄存器 <code>Rd</code> 中。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nf">ADD</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="no">R17</span><span class="w">    </span><span class="c1">; R16 &lt;- R16 + R17</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="io">I/O空间的寻址方式<a class="headerlink" href="#io" title="Permanent link">&para;</a></h2>
+<p>AVR中I/O空间具有独立的地址，范围为0x00~0x3F，支持直接寻址和位寻址。</p>
+<h3 id="_5">直接寻址<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810120238.png" /></p>
+<p>在直接寻址方式下，操作数地址 <code>A</code> 直接编码在指令中。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nf">OUT</span><span class="w"> </span><span class="no">PORTB</span><span class="p">,</span><span class="w"> </span><span class="no">R16</span><span class="w">    </span><span class="c1">; PORTB &lt;- R16</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_6">位寻址<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>I/O空间中地址为0x00~0x1F的区域支持按位访问。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nf">SBI</span><span class="w"> </span><span class="no">PORTB</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w">    </span><span class="c1">; PORTB.2 &lt;- 1</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_7">数据空间的寻址方式<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>AVR中数据空间具有5种寻址方式：直接寻址、间接寻址、带前缀自减的间接寻址、带后缀自增的间接寻址、带偏移量的间接寻址。</p>
+<h3 id="_8">直接寻址<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810121541.png" /></p>
+<p>在直接寻址方式下，操作数地址直接编码在指令中， <code>Rd</code> / <code>Rr</code> 指定目的寄存器/源寄存器。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nf">LDS</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="mi">0X0100</span><span class="w">    </span><span class="c1">; R16 &lt;- (0X0100)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_9">间接寻址<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810121935.png" /></p>
+<p>在间接寻址方式下，操作数地址存放在 <code>X</code> / <code>Y</code> / <code>Z</code> 寄存器中。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nf">LD</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="no">X</span><span class="w">    </span><span class="c1">; R16 &lt;- (X)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_10">带前缀自减的间接寻址<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810122759.png" /></p>
+<p>在带前缀自减的间接寻址方式下，操作数地址存放在 <code>X</code> / <code>Y</code> / <code>Z</code> 寄存器中，并且在操作之前 <code>X</code> / <code>Y</code> / <code>Z</code> 先自减一。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nf">LD</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="p">-</span><span class="no">X</span><span class="w">    </span><span class="c1">; X &lt;- X - 1, R16 &lt;- (X)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_11">带后缀自增的间接寻址<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810123124.png" /></p>
+<p>在带后缀自增的间接寻址方式下，操作数地址存放在 <code>X</code> / <code>Y</code> / <code>Z</code> 寄存器中，并且在操作之后 <code>X</code> / <code>Y</code> / <code>Z</code> 再自增一。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nf">LD</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="no">X</span><span class="err">+</span><span class="w">    </span><span class="c1">; R16 &lt;- (X), X &lt;- X + 1</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_12">带偏移量的间接寻址<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810123446.png" /></p>
+<p>在带偏移量的间接寻址方式下，操作数地址由 <code>Y</code> / <code>Z</code> 寄存器和编码在指令中的偏移量 <code>q</code> 相加得出。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nf">LDD</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="no">Y</span><span class="err">+</span><span class="mi">2</span><span class="w">    </span><span class="c1">; R16 &lt;- (Y + 2)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_13">程序空间的寻址方式<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>AVR中程序空间具有5种寻址方式：常量寻址、带后缀自增的常量寻址、直接寻址、间接寻址、相对寻址，前两种寻址方式用于访问位于程序空间的常量，后三种用于程序跳转。</p>
+<h3 id="_14">常量寻址<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810124306.png" /></p>
+<p>在常量寻址方式下，操作数地址（字节地址）存放在 <code>Z</code> 寄存器中， <code>Z</code> 寄存器中高15位指定字地址，最低位为0表示访问的是字的低位字节，1表示访问的是字的高位字节。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nf">LPM</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="no">Z</span><span class="w">    </span><span class="c1">; R16 &lt;- (Z)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_15">带后缀自增的常量寻址<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810125032.png" /></p>
+<p>在带后缀自增的常量寻址方式下，操作数地址（字节地址）存放在 <code>Z</code> 寄存器中，并且在操作之后 <code>Z</code> 寄存器自增一。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nf">LPM</span><span class="w"> </span><span class="no">R16</span><span class="p">,</span><span class="w"> </span><span class="no">Z</span><span class="err">+</span><span class="w">    </span><span class="c1">; R16 &lt;- (Z), Z &lt;- Z + 1</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_16">直接寻址<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810125828.png" /></p>
+<p>在直接寻址方式下，程序接下来的执行地址（字地址） <code>k</code> 直接编码在指令中。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="w">    </span><span class="nf">JMP</span><span class="w"> </span><span class="no">FUNC</span><span class="w">    </span><span class="c1">; PC &lt;- FUNC</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">    </span><span class="na">...</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="nl">FUNC:</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">    </span><span class="na">...</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_17">间接寻址<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810130415.png" /></p>
+<p>在间接寻址方式下，程序接下来的执行地址（字地址）存放在 <code>Z</code> 寄存器中。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nf">IJMP</span><span class="w">    </span><span class="c1">; PC &lt;- Z</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_18">相对寻址<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/chinjinyu/image-hosting-website@main/images/20230810130944.png" /></p>
+<p>在相对寻址方式下，程序接下来的执行地址（字地址）为 <code>PC</code> + <code>k</code> + 1， <code>k</code> 的范围为-2048~2047。</p>
+<p>例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="w">    </span><span class="nf">RJMP</span><span class="w"> </span><span class="no">FUNC</span><span class="w">    </span><span class="c1">; PC &lt;- FUNC 汇编器会自动计算k的值</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">    </span><span class="na">...</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="nl">FUNC:</span><span class="w">            </span><span class="c1">; FUNC与RJMP指令的距离不能超过-2048~2047</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">    </span><span class="na">...</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_19">参考资料<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/AVR-InstructionSet-Manual-DS40002198.pdf">AVR Instruction Set Manual</a></li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
